@@ -1,14 +1,18 @@
 import React from "react";
-import "App.css";
-import thumb from "./thumb1.jpg";
-
-//Import Components
-import Nav from "./Nav";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/navbar";
+import { Cart } from "./pages/cart/cart";
+import { Shop } from "./pages/shop/shop";
 
 const App = () => (
-	<div>
-		<Nav />
-		<h1 className="wow">Hello React!!!!!</h1>
+	<div className="App">
+		<Router>
+			<Navbar />
+			<Routes>
+				<Route path="/" element={<Shop />}></Route>
+				<Route path="/cart" element={<Cart />}></Route>
+			</Routes>
+		</Router>
 	</div>
 );
 
