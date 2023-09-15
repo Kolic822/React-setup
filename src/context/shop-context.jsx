@@ -1,16 +1,10 @@
 import React, { createContext, useState } from "react";
 import { PRODUCTS } from "../products";
-import { CloudSlash } from "phosphor-react";
 
 export const ShopContext = createContext(null);
 
-// Set everything to 0
 const getDefaultCart = () => {
-	const cart = {};
-	for (let i = 1; i < PRODUCTS.length + 1; i++) {
-		cart[i] = 0;
-	}
-	return cart;
+	return PRODUCTS.reduce((cart, product, index) => ({ ...cart, [index + 1]: 0 }), {});
 };
 
 export const ShopContextProvider = (props) => {
@@ -24,7 +18,11 @@ export const ShopContextProvider = (props) => {
 		setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
 	};
 
-	const contextValue = { cartItems, addToCart, removeFromCart };
+	const updateCartItemCount = (newAmount, itemId) => {
+		setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
+	};
+
+	const contextValue = { cartItems, addToCart, removeFromCart, updateCartItemCount };
 
 	return <ShopContext.Provider value={contextValue}>{props.children}</ShopContext.Provider>;
 };
